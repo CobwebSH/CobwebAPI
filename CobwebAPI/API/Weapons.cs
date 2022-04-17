@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using HarmonyLib;
 
 namespace CobwebAPI.API;
@@ -27,23 +26,30 @@ public class Weapons
     public static Weapon GetEquippedWeapon()
     {
         return WeaponManagerPatch.EquippedWeapon;
-    }
+    }/*
+      * To be done
     public static void SetEquippedWeapon(Weapon weapon)
     {
         WeaponManagerPatch.EquippedWeapon = weapon;
-    }
+    }*/
     // Add weapon
-    public static void AddWeapon(int ammo, List<Weapon.WeaponType> weaponType, string label)
+    public static Weapon AddWeapon(int ammo, List<Weapon.WeaponType> weaponType, string label)
     {
-        // Create new weapon
-        Weapon weapon = new Weapon();
-        weapon.maxAmmo = ammo;
-        weapon.ammo = ammo;
-        weapon.label = label;
-        weapon.type = weaponType;
+        Weapon weapon = new()
+        {
+            maxAmmo = ammo,
+            ammo = ammo,
+            label = label,
+            type = weaponType
+        };
+
+        return weapon;
     }
-    
-    private List<VersusWeapon> getVersusWeapons()
+
+    /*
+     * To be done
+     
+     private List<VersusWeapon> getVersusWeapons()
     {
         bool flag = GameSettings.Instance == null;
         List<VersusWeapon> result;
@@ -67,8 +73,7 @@ public class Weapons
         bool flag2 = flag;
         if (flag2)
         {
-            UnityEngine.Object.Instantiate<GameObject>(this.getVersusWeapons()[selectedWeapon].weapon, gameObject.transform.position, gameObject.transform.rotation);
+            Object.Instantiate(getVersusWeapons()[selectedWeapon].weapon, gameObject.transform.position, gameObject.transform.rotation);
         }
-    }
-    
+    }*/
 }

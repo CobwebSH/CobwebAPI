@@ -8,8 +8,8 @@ namespace CobwebAPI
     public class Main : BaseUnityPlugin
     {
         public const string ModName = "CobwebAPI";
-        public const string ModAuthor  = "SpiderModders";
-        public const string ModGUID = "com.spidermodders.cobwebapi";
+        public const string ModAuthor  = "CobwebSH";
+        public const string ModGUID = "com.cobwebsh.cobwebapi";
         public const string ModVersion = "1.0.0";
         internal static ManualLogSource Log;
         internal Harmony Harmony;
