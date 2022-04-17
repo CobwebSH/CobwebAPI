@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "BfQP6mpVWwkK2+yCigTDNSunNjCnjFDrQEV5UbFfJMxxFnhONl0/rMeijBQkb6gSpkyIi4q87C/6m6KiDHzwhg==",
+  "dgSpecHash": "fdE9WFwE9nLHseRH87LlnYZrIUDbQajLPB24wASoephUN/LkkcRFhrmzbUVLRC/LJ6n+LHZIyvlRaEYEcXbMsg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Aer\\Desktop\\CobwebAPI\\CobwebAPI\\CobwebAPI.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "/home/exo/RiderProjects/CobwebAPI/CobwebAPI/CobwebAPI.csproj",
+  "expectedPackageFiles": [
+    "/home/exo/.nuget/packages/microsoft.netframework.referenceassemblies/1.0.2/microsoft.netframework.referenceassemblies.1.0.2.nupkg.sha512",
+    "/home/exo/.nuget/packages/microsoft.netframework.referenceassemblies.net472/1.0.2/microsoft.netframework.referenceassemblies.net472.1.0.2.nupkg.sha512"
+  ],
   "logs": []
 }
