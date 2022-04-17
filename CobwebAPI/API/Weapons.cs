@@ -54,7 +54,6 @@ public class Weapons
         else
         {
             List<VersusWeapon> list = GameSettings.Instance.AvailableVersusWeapons();
-            this.runOnce = false;
             result = list;
         }
         return result;
