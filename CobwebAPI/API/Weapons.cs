@@ -33,7 +33,7 @@ public class Weapons
         WeaponManagerPatch.EquippedWeapon = weapon;
     }*/
     // Add weapon
-    public static Weapon AddWeapon(int ammo, List<Weapon.WeaponType> weaponType, string label)
+    public static Weapon CreateWeapon(int ammo, List<Weapon.WeaponType> weaponType, string label)
     {
         Weapon weapon = new()
         {
