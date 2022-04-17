@@ -3,7 +3,7 @@ using System.Linq;
 using HarmonyLib;
 using UnityEngine;
 
-namespace CobwebAPI.Modifiers
+namespace CobwebAPI.API
 {
     public class WaveModifiers
     {
