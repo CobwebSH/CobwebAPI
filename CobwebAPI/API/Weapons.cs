@@ -53,7 +53,6 @@ public class Weapons
         }
         else
         {
-            MelonLogger.Msg(GameSettings.Instance.versusWeapons.Count);
             List<VersusWeapon> list = GameSettings.Instance.AvailableVersusWeapons();
             this.runOnce = false;
             result = list;
