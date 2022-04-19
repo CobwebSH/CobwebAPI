@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using HarmonyLib;
 
 namespace CobwebAPI.API;
@@ -9,7 +8,7 @@ public class Weapons
     [HarmonyPatch(typeof(WeaponManager))]
     public class WeaponManagerPatch
     {
-        public static Weapon EquippedWeapon { get; internal set; }
+        public static Weapon? EquippedWeapon { get; internal set; }
         [HarmonyPatch("EquipWeapon")]
         [HarmonyPostfix]
         internal static void EquipWeaponPostfix(Weapon weapon)
@@ -23,7 +22,7 @@ public class Weapons
             EquippedWeapon = null;
         }
     }
-    public static Weapon GetEquippedWeapon()
+    public static Weapon? GetEquippedWeapon()
     {
         return WeaponManagerPatch.EquippedWeapon;
     }/*
