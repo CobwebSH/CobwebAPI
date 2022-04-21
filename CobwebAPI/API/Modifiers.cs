@@ -41,10 +41,15 @@ public class WaveModifiers
         return false;
     }
 
-    public static Modifier Get(string Id)
-    {
-        return ModifierManagerGetNonMaxedWavesModsPatch.Mods.Where(m => m != null && m.data.key == Id).First();
-    }
+        public static Modifier Get(string Id)
+        {
+            return ModifierManagerGetNonMaxedWavesModsPatch.Mods.Where(m => m != null && m.data.key == Id).First();
+        }
+        public static void Give(string id, int level)
+        {
+            var mod = Get(id);
+            mod.levelInWaves = level;
+        }
 
     [HarmonyPatch(typeof(ModifierManager), "GetNonMaxedWavesMods")]
     internal class ModifierManagerGetNonMaxedWavesModsPatch
