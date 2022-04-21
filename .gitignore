@@ -351,3 +351,7 @@ MigrationBackup/
 
 # Rider shit
 .idea/
+
+# VS shit
+bin/
+obj/

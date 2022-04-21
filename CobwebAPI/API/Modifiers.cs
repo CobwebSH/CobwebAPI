@@ -1,47 +1,45 @@
-using System.Collections.Generic;
-using System.Linq;
 using HarmonyLib;
 using UnityEngine;
 
-namespace CobwebAPI.API
+namespace CobwebAPI.API;
+
+public class WaveModifiers
 {
-    public class WaveModifiers
+    public static Modifier Create(string Name, string Id, int MaxLevel, Sprite? Icon = default, string Description = "")
     {
-        public static Modifier Create(string Name, string Id, int MaxLevel, Sprite Icon = default, string Description = "")
+        var modifierData = ScriptableObject.CreateInstance<ModifierData>();
+
+        modifierData.title = Name;
+        modifierData.key = Id;
+        modifierData.maxLevel = MaxLevel;
+        modifierData.icon = Icon;
+        modifierData.description = Description;
+
+        modifierData.waves = true;
+        modifierData.versus = false;
+
+        return new Modifier(modifierData);
+    }
+
+    public static bool Add(Modifier modifier)
+    {
+        if (!ModifierManagerGetNonMaxedWavesModsPatch.Mods.Contains(modifier))
         {
-            var modifierData = ScriptableObject.CreateInstance<ModifierData>();
-
-            modifierData.title = Name;
-            modifierData.key = Id;
-            modifierData.maxLevel = MaxLevel;
-            modifierData.icon = Icon;
-            modifierData.description = Description;
-
-            modifierData.waves = true;
-            modifierData.versus = false;
-
-            return new Modifier(modifierData);
+            ModifierManagerGetNonMaxedWavesModsPatch.Mods.Add(modifier);
+            return true;
         }
+        return false;
+    }
 
-        public static bool Add(Modifier modifier)
+    public static bool Remove(Modifier modifier)
+    {
+        if (ModifierManagerGetNonMaxedWavesModsPatch.Mods.Contains(modifier))
         {
-            if (!ModifierManagerGetNonMaxedWavesModsPatch.Mods.Contains(modifier))
-            {
-                ModifierManagerGetNonMaxedWavesModsPatch.Mods.Add(modifier);
-                return true;
-            }
-            return false;
+            var mod = ModifierManagerGetNonMaxedWavesModsPatch.Mods.Where(m => m.data.key == modifier.data.key).FirstOrDefault();
+            return ModifierManagerGetNonMaxedWavesModsPatch.Mods.Remove(mod);
         }
-
-        public static bool Remove(Modifier modifier)
-        {
-            if (ModifierManagerGetNonMaxedWavesModsPatch.Mods.Contains(modifier))
-            {
-                var mod = ModifierManagerGetNonMaxedWavesModsPatch.Mods.Where(m => m.data.key == modifier.data.key).FirstOrDefault();
-                return ModifierManagerGetNonMaxedWavesModsPatch.Mods.Remove(mod);
-            }
-            return false;
-        }
+        return false;
+    }
 
         public static Modifier Get(string Id)
         {
@@ -53,34 +51,33 @@ namespace CobwebAPI.API
             mod.levelInWaves = level;
         }
 
-        [HarmonyPatch(typeof(ModifierManager), "GetNonMaxedWavesMods")]
-        internal class ModifierManagerGetNonMaxedWavesModsPatch
+    [HarmonyPatch(typeof(ModifierManager), "GetNonMaxedWavesMods")]
+    internal class ModifierManagerGetNonMaxedWavesModsPatch
+    {
+        internal static List<Modifier> Mods { get; private set; } = new();
+        internal static bool Prefix(ModifierManager __instance, ref List<Modifier> __result)
         {
-            internal static List<Modifier> Mods { get; private set; } = new();
-            internal static bool Prefix(ModifierManager __instance, ref List<Modifier> __result)
+            var templist = (from m in Traverse.Create(__instance).Field<List<Modifier>>("_modifiers").Value
+                where m.levelInWaves < m.data.maxLevel && m.data.waves
+                select m).ToList();
+            if(Mods.Count > 0)
             {
-                var templist = (from m in Traverse.Create(__instance).Field<List<Modifier>>("_modifiers").Value
-                                where m.levelInWaves < m.data.maxLevel && m.data.waves
-                                select m).ToList();
-                if(Mods.Count > 0)
+                foreach (Modifier mod in Mods)
                 {
-                    foreach (Modifier mod in Mods)
-                    {
-                        if (mod == null || templist.Contains(mod))
-                            continue;
+                    if (mod == null || templist.Contains(mod))
+                        continue;
 
-                        templist.Add(mod);
-                    }
+                    templist.Add(mod);
                 }
-
-                __result = templist;
-                return false;
             }
 
-            internal static void Postfix(ref List<Modifier> __result)
-            {
-                Mods = __result;
-            }
+            __result = templist;
+            return false;
+        }
+
+        internal static void Postfix(ref List<Modifier> __result)
+        {
+            Mods = __result;
         }
     }
 }
