@@ -23,9 +23,9 @@ public class WaveModifiers
 
     public static bool Add(Modifier modifier)
     {
-        if (!ModifierManagerGetNonMaxedWavesModsPatch.Mods.Contains(modifier))
+        if (!ModifierManagerGetNonMaxedSurvivalModsPatch.Mods.Contains(modifier))
         {
-            ModifierManagerGetNonMaxedWavesModsPatch.Mods.Add(modifier);
+            ModifierManagerGetNonMaxedSurvivalModsPatch.Mods.Add(modifier);
             return true;
         }
         return false;
@@ -33,17 +33,17 @@ public class WaveModifiers
 
     public static bool Remove(Modifier modifier)
     {
-        if (ModifierManagerGetNonMaxedWavesModsPatch.Mods.Contains(modifier))
+        if (ModifierManagerGetNonMaxedSurvivalModsPatch.Mods.Contains(modifier))
         {
-            var mod = ModifierManagerGetNonMaxedWavesModsPatch.Mods.Where(m => m.data.key == modifier.data.key).FirstOrDefault();
-            return ModifierManagerGetNonMaxedWavesModsPatch.Mods.Remove(mod);
+            var mod = ModifierManagerGetNonMaxedSurvivalModsPatch.Mods.Where(m => m.data.key == modifier.data.key).FirstOrDefault();
+            return ModifierManagerGetNonMaxedSurvivalModsPatch.Mods.Remove(mod);
         }
         return false;
     }
 
         public static Modifier Get(string Id)
         {
-            return ModifierManagerGetNonMaxedWavesModsPatch.Mods.Where(m => m != null && m.data.key == Id).First();
+            return ModifierManagerGetNonMaxedSurvivalModsPatch.Mods.Where(m => m != null && m.data.key == Id).First();
         }
         public static void Give(string id, int level)
         {
@@ -51,8 +51,8 @@ public class WaveModifiers
             mod.levelInWaves = level;
         }
 
-    [HarmonyPatch(typeof(ModifierManager), "GetNonMaxedWavesMods")]
-    internal class ModifierManagerGetNonMaxedWavesModsPatch
+    [HarmonyPatch(typeof(ModifierManager), "GetNonMaxedSurvivalMods")]
+    internal class ModifierManagerGetNonMaxedSurvivalModsPatch
     {
         internal static List<Modifier> Mods { get; private set; } = new();
         internal static bool Prefix(ModifierManager __instance, ref List<Modifier> __result)
