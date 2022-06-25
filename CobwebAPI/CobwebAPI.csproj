@@ -13,7 +13,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <GameVersion>0.76.1-r.0</GameVersion>
+        <GameVersion>0.86.2</GameVersion>
     </PropertyGroup>
 
     <ItemGroup>
