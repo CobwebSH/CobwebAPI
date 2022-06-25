@@ -15,7 +15,7 @@ public class WaveModifiers
         modifierData.icon = Icon;
         modifierData.description = Description;
 
-        modifierData.waves = true;
+        modifierData.survival = true;
         modifierData.versus = false;
 
         return new Modifier(modifierData);
@@ -48,7 +48,7 @@ public class WaveModifiers
         public static void Give(string id, int level)
         {
             var mod = Get(id);
-            mod.levelInWaves = level;
+            mod.levelInSurvival = level;
         }
 
     [HarmonyPatch(typeof(ModifierManager), "GetNonMaxedSurvivalMods")]
@@ -58,7 +58,7 @@ public class WaveModifiers
         internal static bool Prefix(ModifierManager __instance, ref List<Modifier> __result)
         {
             var templist = (from m in Traverse.Create(__instance).Field<List<Modifier>>("_modifiers").Value
-                where m.levelInWaves < m.data.maxLevel && m.data.waves
+                where m.levelInSurvival < m.data.maxLevel && m.data.survival
                 select m).ToList();
             if(Mods.Count > 0)
             {
