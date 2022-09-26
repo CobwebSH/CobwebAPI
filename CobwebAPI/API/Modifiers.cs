@@ -50,10 +50,13 @@ public class WaveModifiers
         return ModifierManagerGetNonMaxedSurvivalModsPatch.Mods.Where(m => m != null && m.data.key == Id).First();
     }
 
-    public static void Give(string id, int level)
+    public static void Give(string id, int level, bool survival, bool versus)
     {
         var mod = Get(id);
-        mod.levelInSurvival = level;
+        if (survival)
+            mod.levelInSurvival = level;
+        if (versus)
+            mod.levelInVersus = level;
     }
 
     [HarmonyPatch(typeof(ModifierManager), "GetNonMaxedSurvivalMods")]
