@@ -1,4 +1,7 @@
 using HarmonyLib;
+using UnityEngine;
+using UnityEngine.InputSystem.Utilities;
+using Object = System.Object;
 
 namespace CobwebAPI.API;
 
@@ -58,20 +61,20 @@ public class Weapons
         return weapon;
     }
 
-    /*
-     * To be done
+    
+     //* To be done
      
-     private List<VersusWeapon> getVersusWeapons()
+     private List<SpawnableWeapon> getVersusWeapons()
     {
         bool flag = GameSettings.Instance == null;
-        List<VersusWeapon> result;
+        List<SpawnableWeapon> result;
         if (flag)
         {
             result = null;
         }
         else
         {
-            List<VersusWeapon> list = GameSettings.Instance.AvailableVersusWeapons();
+            List<SpawnableWeapon> list = GameSettings.Instance.AvailableVersusWeapons();
             result = list;
         }
         return result;
@@ -85,7 +88,9 @@ public class Weapons
         bool flag2 = flag;
         if (flag2)
         {
-            Object.Instantiate(getVersusWeapons()[selectedWeapon].weapon, gameObject.transform.position, gameObject.transform.rotation);
+            //Object.Instantiate(getVersusWeapons()[selectedWeapon].weapon, gameObject.transform.position, gameObject.transform.rotation);
+            ObjectSpawner.Instantiate(getVersusWeapons()[selectedWeapon].weaponObject, gameObject.transform.position,
+                gameObject.transform.rotation);
         }
-    }*/
+    }
 }
