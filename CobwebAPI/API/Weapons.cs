@@ -11,9 +11,22 @@ public class Weapons
         public static Weapon? EquippedWeapon { get; internal set; }
         [HarmonyPatch("EquipWeapon")]
         [HarmonyPostfix]
-        internal static void EquipWeaponPostfix(Weapon weapon)
+        internal static void EquipWeaponPostfix(ref Weapon weapon)
         {
             EquippedWeapon = weapon;
+            if (EquippedWeapon != null)
+            {
+                weapon = EquippedWeapon;
+            }
+        }
+
+        [HarmonyPrefix]
+        internal static void EquipWeaponPrefix(ref Weapon weapon)
+        {
+            if (EquippedWeapon != null)
+            {
+                weapon = EquippedWeapon;
+            }
         }
         [HarmonyPatch("UnEquipWeapon")]
         [HarmonyPostfix]
@@ -25,12 +38,12 @@ public class Weapons
     public static Weapon? GetEquippedWeapon()
     {
         return WeaponManagerPatch.EquippedWeapon;
-    }/*
-      * To be done
+    }
+     // * To be done
     public static void SetEquippedWeapon(Weapon weapon)
     {
         WeaponManagerPatch.EquippedWeapon = weapon;
-    }*/
+    }
     // Add weapon
     public static Weapon CreateWeapon(int ammo, List<Weapon.WeaponType> weaponType, string label)
     {
