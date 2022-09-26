@@ -22,7 +22,7 @@ public class Weapons
                 weapon = EquippedWeapon;
             }
         }
-
+        [HarmonyPatch("EquipWeapon")]
         [HarmonyPrefix]
         internal static void EquipWeaponPrefix(ref Weapon weapon)
         {
