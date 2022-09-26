@@ -5,7 +5,7 @@ namespace CobwebAPI.API;
 
 public class WaveModifiers
 {
-    public static Modifier Create(string Name, string Id, int MaxLevel, Sprite? Icon = default, string Description = "")
+    public static Modifier Create(string Name, string Id, bool versus, bool survival, int MaxLevel, Sprite? Icon = default, string Description = "")
     {
         var modifierData = ScriptableObject.CreateInstance<ModifierData>();
 
@@ -15,8 +15,8 @@ public class WaveModifiers
         modifierData.icon = Icon;
         modifierData.description = Description;
 
-        modifierData.survival = true;
-        modifierData.versus = false;
+        modifierData.survival = survival;
+        modifierData.versus = versus;
 
         return new Modifier(modifierData);
     }
