@@ -5,7 +5,8 @@ namespace CobwebAPI.API;
 
 public class WaveModifiers
 {
-    public static Modifier Create(string Name, string Id, bool versus, bool survival, int MaxLevel, Sprite? Icon = default, string Description = "")
+    public static Modifier Create(string Name, string Id, bool versus, bool survival, int MaxLevel,
+        Sprite? Icon = default, string Description = "")
     {
         var modifierData = ScriptableObject.CreateInstance<ModifierData>();
 
@@ -28,6 +29,7 @@ public class WaveModifiers
             ModifierManagerGetNonMaxedSurvivalModsPatch.Mods.Add(modifier);
             return true;
         }
+
         return false;
     }
 
@@ -35,32 +37,36 @@ public class WaveModifiers
     {
         if (ModifierManagerGetNonMaxedSurvivalModsPatch.Mods.Contains(modifier))
         {
-            var mod = ModifierManagerGetNonMaxedSurvivalModsPatch.Mods.Where(m => m.data.key == modifier.data.key).FirstOrDefault();
+            var mod = ModifierManagerGetNonMaxedSurvivalModsPatch.Mods.Where(m => m.data.key == modifier.data.key)
+                .FirstOrDefault();
             return ModifierManagerGetNonMaxedSurvivalModsPatch.Mods.Remove(mod);
         }
+
         return false;
     }
 
-        public static Modifier Get(string Id)
-        {
-            return ModifierManagerGetNonMaxedSurvivalModsPatch.Mods.Where(m => m != null && m.data.key == Id).First();
-        }
-        public static void Give(string id, int level)
-        {
-            var mod = Get(id);
-            mod.levelInSurvival = level;
-        }
+    public static Modifier Get(string Id)
+    {
+        return ModifierManagerGetNonMaxedSurvivalModsPatch.Mods.Where(m => m != null && m.data.key == Id).First();
+    }
+
+    public static void Give(string id, int level)
+    {
+        var mod = Get(id);
+        mod.levelInSurvival = level;
+    }
 
     [HarmonyPatch(typeof(ModifierManager), "GetNonMaxedSurvivalMods")]
     internal class ModifierManagerGetNonMaxedSurvivalModsPatch
     {
         internal static List<Modifier> Mods { get; private set; } = new();
+
         internal static bool Prefix(ModifierManager __instance, ref List<Modifier> __result)
         {
             var templist = (from m in Traverse.Create(__instance).Field<List<Modifier>>("_modifiers").Value
                 where m.levelInSurvival < m.data.maxLevel && m.data.survival
                 select m).ToList();
-            if(Mods.Count > 0)
+            if (Mods.Count > 0)
             {
                 foreach (Modifier mod in Mods)
                 {
