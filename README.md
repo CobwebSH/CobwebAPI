@@ -8,4 +8,4 @@
   described in the HarmonyX wiki: <https://github.com/BepInEx/HarmonyX/wiki>)
 
 # Contributing
-Anyone wanting to contribute must follow the [coding conventions](https://github.com/modweaver/cobweb-api/tree/main/.github/CodingConventions.md], we appreciate any support!
+Anyone wanting to contribute must follow the [coding conventions](https://github.com/modweaver/cobweb-api/tree/main/.github/CodingConventions.md), we appreciate any support!
